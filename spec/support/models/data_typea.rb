@@ -1,4 +1,4 @@
-class DataType < ActiveRecord::Base
+class DataTypea < ActiveRecord::Base
   dynamic_model
 
   def self.hoi

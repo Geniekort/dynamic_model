@@ -7,9 +7,9 @@ ActiveRecord::Base.establish_connection(adapter: "sqlite3",
 
 
 require "#{File.dirname(__FILE__)}/support/schema.rb"
-require "#{File.dirname(__FILE__)}/support/models/data_field.rb"
+require "#{File.dirname(__FILE__)}/support/models/data_attribute.rb"
 require "#{File.dirname(__FILE__)}/support/models/data_object.rb"
-require "#{File.dirname(__FILE__)}/support/models/data_type.rb"
+require "#{File.dirname(__FILE__)}/support/models/data_typea.rb"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

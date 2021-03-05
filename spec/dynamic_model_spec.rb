@@ -4,10 +4,10 @@ RSpec.describe DynamicModel do
   end
 
   it "does something useful" do
-    d = DataType.create(title: "woeiwoei")
+    d = DataTypea.create(title: "woeiwoei")
     o = d.data_objects.create(datas: {test: "Hallo daar!"})
     puts o.datas
     puts o.get_data
-    expect(DataType.title).to eq("doei")
+    expect("doei").to eq("doei")
   end
 end
