@@ -11,6 +11,7 @@ ActiveRecord::Schema.define(version: 20100401102949) do
     t.string   "title"
     t.string   "plural_title"
     t.integer  "data_typea_id", index: true
+    t.string   "attribute_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
