@@ -7,40 +7,10 @@ module DynamicModel::DataAttribute
       validate :validate_validation_definition
     end
 
-    # Validate whether validation definitions are valid
     def validate_validation_definition
-      return unless attribute_type_helper_class # Early bail-out since other validation will fail 
+      return unless attribute_type_helper_class # Early bail-out since other validation will fail
 
-      attribute_type_helper_class.allowed_validation_definition_keys.each do |validation_key|
-        next unless (validator_definition = validation_definition[validation_key]).present?
-
-        validator_instance = validator(validation_key, validator_definition)
-
-        errors.merge!(validator_instance.errors) unless validator_instance.validate
-      end
-
-      true
-    end
-
-    # Create an instance for a specific validation type
-    def validator(validation_key, validator_defintion)
-      validator_class_name = "DynamicModel::DataAttribute::Validator::#{validation_key.camelcase}"
-      validator_class = validator_class_name.safe_constantize
-      unless validator_class
-        raise "Missing validator class for #{validation_key}, expected class `#{validator_class_name}` to exist."
-      end
-
-      validator_class.new(validator_defintion, self.id.to_s)
-    end
-
-    # Return a list of all validators for which a non-null definition is provided in validation_definition, 
-    #  i.e. for each type of validation defined in the validation_definition
-    def active_validators
-      attribute_type_helper_class.allowed_validation_definition_keys.map do |validation_key|
-        if (validator_definition = validation_definition[validation_key]).present?
-          validator(validation_key, validator_definition)
-        end
-      end.compact
+      attribute_type_helper.validate_validation_definition(self)
     end
 
     # Find the class that includes all attribute type specific helper methods. E.g. getters/setters
@@ -52,7 +22,6 @@ module DynamicModel::DataAttribute
     def attribute_type_helper
       attribute_type_helper_class.new(self)
     end
-
 
     def validate_attribute_type
       unless attribute_type_helper_class

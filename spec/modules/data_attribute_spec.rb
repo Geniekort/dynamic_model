@@ -3,7 +3,7 @@ RSpec.describe DynamicModel::DataAttribute do
     before(:each) do
       @data_attribute = DataAttribute.new(
         name: "test_attribute",
-        attribute_type: "String",
+        attribute_type: "Text",
         validation_definition: {}
       )
     end

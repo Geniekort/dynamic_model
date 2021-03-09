@@ -1,9 +1,9 @@
-RSpec.describe DynamicModel::DataAttribute::Helper::String do
+RSpec.describe DynamicModel::DataAttribute::Helper::Text do
   describe "validations" do
     before(:each) do
       @data_attribute = DataAttribute.new(
         name: "test_attribute",
-        attribute_type: "String",
+        attribute_type: "Text",
         validation_definition: {}
       )
     end

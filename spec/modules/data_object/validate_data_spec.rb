@@ -6,16 +6,16 @@ RSpec.describe DynamicModel::DataObject do
     end
 
     context "without any data validation rules" do
-      it "saves with no data" do
-        expect(@data_object.save).to eq true
+      it "is valid with no data" do
+        expect(@data_object).to be_valid
       end
 
-      it "saves with valid data" do
+      it "is valid with valid data" do
         @data_object.data = {
           @data_attribute.id.to_s => "Hi there, a test title"
         }
 
-        expect(@data_object.save).to eq true
+        expect(@data_object).to be_valid
       end
 
       it "raises a validation error when invalid attribute id is used as key for data" do
@@ -58,6 +58,21 @@ RSpec.describe DynamicModel::DataObject do
             error: :invalid_attribute_value, 
             invalid_attribute_id: @data_attribute.id.to_s,
             value_error: :blank
+          }
+        )
+      end
+
+      it "raises a validation error when a number title is provided" do
+        @data_object.data = {
+          @data_attribute.id.to_s => 123
+        }
+
+        expect(@data_object).not_to be_valid
+        expect(@data_object.errors.details[:data]).to include(
+          { 
+            error: :invalid_attribute_value,
+            invalid_attribute_id: @data_attribute.id.to_s,
+            value_error: :invalid_type
           }
         )
       end
