@@ -1,3 +1,5 @@
+require "active_record"
+
 require "dynamic_model/version"
 require "dynamic_model/data_type"
 require "dynamic_model/data_attribute"

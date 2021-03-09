@@ -7,6 +7,10 @@ module DynamicModel::DataAttribute::Validator
       @validator_definition = validator_definition.deep_stringify_keys
     end
 
+    def validate_value
+      raise NotImplementedError, "#validate_value is not implemented for #{self.class}"
+    end
+
     # Validate the validation_definition.
     # NOTE: This is NOT validating an actual data object. Just the @validator_definition. Refer to #validate_value
     #  for the actual validation of values from data_objects

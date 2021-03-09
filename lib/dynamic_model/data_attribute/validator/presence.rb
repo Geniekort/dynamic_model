@@ -9,7 +9,10 @@ module DynamicModel::DataAttribute::Validator
           invalid_attribute_id: @attribute_id,
           value_error: :blank
         )
+        return false
       end
+
+      true
     end
   end
 end
