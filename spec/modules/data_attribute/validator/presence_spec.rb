@@ -3,7 +3,7 @@ RSpec.describe DynamicModel::DataAttribute::Validator::Presence do
     it "does not give a validation error if the condition is provided" do
       validator = described_class.new({
         condition: true
-      })
+      }, "1")
       
       expect(validator.validate).to eq true
     end
@@ -11,7 +11,8 @@ RSpec.describe DynamicModel::DataAttribute::Validator::Presence do
     it "gives a validation error if the condition is not provided" do
       validator = described_class.new({
         random_stuff: true
-      })
+      },
+      "-1")
 
       expect(validator.validate).to eq false
       expect(validator.errors.details[:validation_definition]).to include(

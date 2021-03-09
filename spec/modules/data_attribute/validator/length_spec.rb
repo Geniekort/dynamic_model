@@ -1,11 +1,14 @@
 RSpec.describe DynamicModel::DataAttribute::Validator::Length do
   describe "#validate" do
     it "does not give a validation error if the condition is provided" do
-      validator = described_class.new({
-        condition: {
-          min: 5
-        }
-      })
+      validator = described_class.new(
+        {
+          condition: {
+            min: 5
+          }
+        },
+        "-1"
+      )
 
       expect(validator.validate).to eq true
     end
@@ -13,7 +16,8 @@ RSpec.describe DynamicModel::DataAttribute::Validator::Length do
     it "does give a validation error if an invalid condition type is provided" do
       validator = described_class.new({
         condition: "beer"
-      })
+      },
+      "-1")
 
       expect(validator.validate).to eq false
       expect(validator.errors.details[:validation_definition]).to include(
@@ -30,7 +34,8 @@ RSpec.describe DynamicModel::DataAttribute::Validator::Length do
         condition: {
           min: { we_are: "Hashing!" }
         }
-      })
+      },
+      "-1")
 
       expect(validator.validate).to eq false
       expect(validator.errors.details[:validation_definition]).to include(

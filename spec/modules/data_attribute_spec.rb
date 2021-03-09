@@ -28,11 +28,5 @@ RSpec.describe DynamicModel::DataAttribute do
       expect(@data_attribute).not_to be_valid
       expect(@data_attribute.errors.details[:name]).to include({ error: :blank })
     end
-
-    describe "validation_definition validations" do
-      it "rejects validation_definition" do
-        skip
-      end
-    end
   end
 end

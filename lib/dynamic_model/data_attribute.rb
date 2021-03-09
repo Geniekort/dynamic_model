@@ -9,7 +9,7 @@ module DynamicModel
     end
 
     included do
-      include DynamicModel::DataAttribute::Base
+      include DynamicModel::DataAttribute::ValidatorHelper
 
       def self.dynamic_model_attribute_attrs
         {

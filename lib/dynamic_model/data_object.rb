@@ -1,3 +1,5 @@
+Dir[%(#{File.dirname(__FILE__)}/data_object/**/*.rb)].sort.each { |file| require file }
+
 module DynamicModel
   module DataObject
     extend ActiveSupport::Concern
@@ -18,7 +20,9 @@ module DynamicModel
         class_name
       end
 
-      belongs_to :data_type, class_name: data_type_class_name
+      belongs_to :data_type, class_name: data_type_class_name, required: true
+
+      validate :validate_data_with_data_model
     end
 
     class_methods do
@@ -26,7 +30,14 @@ module DynamicModel
     end
 
     def get_data
-      send(self.class.dynamic_model_data_object_attrs[:data_column_name])
+      send(self.class.dynamic_model_data_object_attrs[:data_column_name]) || {}
+    end
+
+    # Validate this data object against its data model.
+    def validate_data_with_data_model
+      return unless data_type # Early bail-out if data_type is not present. Other validation will fail
+
+      DynamicModel::DataObject::Validator.new(self).validate
     end
   end
 end

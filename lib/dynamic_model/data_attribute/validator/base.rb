@@ -2,12 +2,14 @@ module DynamicModel::DataAttribute::Validator
   class Base
     include ActiveModel::Validations
 
-    def initialize(validator_definition)
+    def initialize(validator_definition, attribute_id)
+      @attribute_id = attribute_id
       @validator_definition = validator_definition.deep_stringify_keys
     end
 
     # Validate the validation_definition.
-    # NOTE: This is NOT validating an actual data object. Just the @validator_definition
+    # NOTE: This is NOT validating an actual data object. Just the @validator_definition. Refer to #validate_value
+    #  for the actual validation of values from data_objects
     def validate
       return true unless @validator_definition.keys.any?
 
@@ -41,6 +43,10 @@ module DynamicModel::DataAttribute::Validator
           { invalid_validation_key: self.class.name.demodulize.underscore }
         )
       )
+    end
+
+    def add_error_to_data_object(data_object, error_key, error_data = {}, error_scope = :data)
+      data_object.errors.add(error_scope, error_key, **error_data)
     end
   end
 end

@@ -1,5 +1,7 @@
 module DynamicModel::DataAttribute::Validator
   class Length < Base
+
+
     # Validate whether min and/or max are provided as a condition
     def validator_specific_validations
       unless condition.is_a? Hash
