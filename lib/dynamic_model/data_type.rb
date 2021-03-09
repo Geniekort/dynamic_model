@@ -28,8 +28,6 @@ module DynamicModel
       has_many :data_attributes, class_name: data_attribute_class_name
       has_many :data_objects, class_name: data_object_class_name
 
-      data_object_class.include DynamicModel::DataObject
-      data_attribute_class.include DynamicModel::DataAttribute
     end
   end
 end

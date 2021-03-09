@@ -28,7 +28,6 @@ module DynamicModel::DataObject
     #  part of the data model
     def validate_present_attributes
       allowed_attribute_ids = data_attributes.map(&:id).map(&:to_s)
-
       invalid_attribute_ids = @data_object.get_data.keys - allowed_attribute_ids
       if invalid_attribute_ids.any?
         add_error(:invalid_attribute_ids, invalid_attribute_ids: invalid_attribute_ids)

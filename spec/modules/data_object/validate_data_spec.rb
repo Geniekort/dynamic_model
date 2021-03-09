@@ -54,8 +54,8 @@ RSpec.describe DynamicModel::DataObject do
 
         expect(@data_object).not_to be_valid
         expect(@data_object.errors.details[:data]).to include(
-          { 
-            error: :invalid_attribute_value, 
+          {
+            error: :invalid_attribute_value,
             invalid_attribute_id: @data_attribute.id.to_s,
             value_error: :blank
           }
@@ -69,10 +69,66 @@ RSpec.describe DynamicModel::DataObject do
 
         expect(@data_object).not_to be_valid
         expect(@data_object.errors.details[:data]).to include(
-          { 
+          {
             error: :invalid_attribute_value,
             invalid_attribute_id: @data_attribute.id.to_s,
             value_error: :invalid_type
+          }
+        )
+      end
+    end
+
+    context "with length validation enabled title is given" do
+      before(:each) do
+        @data_attribute.update(
+          validation_definition: {
+            length: { condition: { min: 5, max: 10 } }
+          }
+        )
+      end
+
+      it "saves with valid input string, bottom edge case" do
+        @data_object.data = {
+          @data_attribute.id.to_s => "12345"
+        }
+
+        expect(@data_object).to be_valid
+      end
+
+      it "saves with valid input string, top edge case" do
+        @data_object.data = {
+          @data_attribute.id.to_s => "012345789"
+        }
+
+        expect(@data_object).to be_valid
+      end
+
+      it "raises a validation error when a too short" do
+        @data_object.data = {
+          @data_attribute.id.to_s => "1"
+        }
+
+        expect(@data_object).not_to be_valid
+        expect(@data_object.errors.details[:data]).to include(
+          {
+            error: :invalid_attribute_value,
+            invalid_attribute_id: @data_attribute.id.to_s,
+            value_error: :too_short
+          }
+        )
+      end
+
+      it "raises a validation error when a too long title is given" do
+        @data_object.data = {
+          @data_attribute.id.to_s => "01234567891"
+        }
+
+        expect(@data_object).not_to be_valid
+        expect(@data_object.errors.details[:data]).to include(
+          {
+            error: :invalid_attribute_value,
+            invalid_attribute_id: @data_attribute.id.to_s,
+            value_error: :too_long
           }
         )
       end

@@ -10,10 +10,15 @@ module DynamicModel
 
     def dynamic_model_data_object(attributes={})
       @dynamic_model_data_object_attrs = attributes
-    end
 
+      include DynamicModel::DataObject
+      
+    end
+    
     def dynamic_model_attribute(attributes={})
       @dynamic_model_attribute_attrs = attributes
+
+      include DynamicModel::DataAttribute
     end
   end
 end
