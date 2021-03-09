@@ -1,4 +1,4 @@
-Dir[%(#{File.dirname(__FILE__)}/data_attribute/*.rb)].sort.each { |file| require file }
+Dir[%(#{File.dirname(__FILE__)}/data_attribute/**/*.rb)].sort.each { |file| require file }
 
 module DynamicModel
   module DataAttribute
@@ -9,6 +9,8 @@ module DynamicModel
     end
 
     included do
+      include DynamicModel::DataAttribute::Base
+
       def self.dynamic_model_attribute_attrs
         {
           data_type_class_name: "DataType"
@@ -25,18 +27,7 @@ module DynamicModel
 
       belongs_to :data_type, class_name: data_type_class_name
 
-      validate :validate_attribute_type
-
-      def validate_attribute_type
-        type_module = "DynamicModel::DataAttribute::#{attribute_type}".safe_constantize
-
-        unless type_module
-          errors.add(:attribute_type, :invalid)
-          return false
-        end
-
-        true
-      end
+      validates :name, presence: true
     end
   end
 end

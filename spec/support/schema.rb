@@ -8,8 +8,8 @@ ActiveRecord::Schema.define(version: 20100401102949) do
   end
 
   create_table "data_attributes", force: true do |t|
-    t.string   "title"
-    t.string   "plural_title"
+    t.string   "name"
+    t.json     "validation_definition"
     t.integer  "data_typea_id", index: true
     t.string   "attribute_type"
     t.datetime "created_at"
