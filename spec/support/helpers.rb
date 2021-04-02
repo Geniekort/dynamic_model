@@ -1,3 +1,7 @@
+def new_data_attribute
+  ::DataAttribute.new
+end
+
 def create_data_type
   DataType.create
 end

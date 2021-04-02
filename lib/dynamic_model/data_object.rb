@@ -15,7 +15,7 @@ module DynamicModel
       def self.data_type_class_name
         class_name = dynamic_model_data_object_attrs[:data_type_class_name]
 
-        raise DynamicModel::Error, "No class `#{class_name}` found" unless class_name.safe_constantize
+        # raise DynamicModel::Error, "No class `#{class_name}` found" unless class_name.safe_constantize
 
         class_name
       end

@@ -1,10 +1,11 @@
 module DynamicModel::DataAttribute::Validator
   class Base
-    include ActiveModel::Validations
-
-    def initialize(validator_definition, attribute_id)
+    attr_reader :data_attribute
+    
+    def initialize(validator_definition, attribute_id, data_attribute)
       @attribute_id = attribute_id
       @validator_definition = validator_definition.deep_stringify_keys
+      @data_attribute = data_attribute
     end
 
     def validate_value
@@ -40,7 +41,7 @@ module DynamicModel::DataAttribute::Validator
     end
 
     def add_error(error_key, error_data = {})
-      errors.add(
+      data_attribute.errors.add(
         :validation_definition,
         error_key,
         **error_data.merge(

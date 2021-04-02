@@ -1,5 +1,7 @@
 module DynamicModel::DataAttribute::Helper
   class Number < Base
+
+    # Validate whether the value for this field is a number
     def validate_value_type
       if data_attribute_value && !data_attribute_value.is_a?(::Numeric)
         add_error_to_data_object(

@@ -2,6 +2,8 @@ require "active_record"
 require "bundler/setup"
 require "dynamic_model"
 
+require "byebug"
+
 ActiveRecord::Base.establish_connection(adapter: "sqlite3",
                                         database: File.dirname(__FILE__) + "/dynamic_model_db.sqlite3")
 

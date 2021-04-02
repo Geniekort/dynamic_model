@@ -14,8 +14,10 @@ module DynamicModel::DataAttribute::Helper
     end
 
     class << self
-      def allowed_validation_definition_keys
-        super + %w[length]
+      def allowed_validation_definitions
+        super.merge({
+          "length" => { required: false }
+        })
       end
     end
   end

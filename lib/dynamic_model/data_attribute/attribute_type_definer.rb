@@ -1,5 +1,7 @@
 module DynamicModel::DataAttribute
-  module ValidatorHelper
+  # This module ensures that a DataAttribute includes all functionality that is necessary
+  #  for each specific attribute_type
+  module AttributeTypeDefiner
     extend ActiveSupport::Concern
 
     included do
@@ -10,7 +12,7 @@ module DynamicModel::DataAttribute
     def validate_validation_definition
       return unless attribute_type_helper_class # Early bail-out since other validation will fail
 
-      attribute_type_helper.validate_validation_definition(self)
+      attribute_type_helper.validate_validation_definition
     end
 
     # Find the class that includes all attribute type specific helper methods. E.g. getters/setters
