@@ -24,7 +24,7 @@ module DynamicModel
         # Validate the attribute value against the dynamic validations defined in validation_definition
         def validate_dynamic_validations
           active_validators.each do |active_validator|
-            active_validator.validate_value(data_attribute_value, @data_object)
+            active_validator.validate_value(@data_object)
           end
         end
 
@@ -61,7 +61,7 @@ module DynamicModel
             raise "Missing validator class for #{validation_key}, expected class `#{validator_class_name}` to exist."
           end
 
-          validator_class.new(validator_defintion, @data_attribute.id.to_s, data_attribute)
+          validator_class.new(validator_defintion, data_attribute)
         end
 
         # Return a list of all validators for which a non-null definition is provided in validation_definition,

@@ -11,7 +11,6 @@ RSpec.describe DynamicModel::DataAttribute::Validator::Length do
             min: 5
           }
         },
-        "-1",
         @data_attribute
       )
 
@@ -22,8 +21,7 @@ RSpec.describe DynamicModel::DataAttribute::Validator::Length do
       validator = described_class.new(
         {
           condition: "beer"
-        },
-        "-1", @data_attribute
+        }, @data_attribute
       )
 
       expect(validator.validate).to eq false
@@ -42,8 +40,7 @@ RSpec.describe DynamicModel::DataAttribute::Validator::Length do
           condition: {
             min: { we_are: "Hashing!" }
           }
-        },
-        "-1", @data_attribute
+        }, @data_attribute
       )
 
       expect(validator.validate).to eq false

@@ -8,7 +8,7 @@ RSpec.describe DynamicModel::DataAttribute::Helper::Reference do
       )
     end
 
-    describe "DataType validation" do
+    describe "referred_data_type validation" do
       it "does raise validation error if the condition is not provided" do
         @data_attribute.validation_definition["referred_data_type"] = nil
 

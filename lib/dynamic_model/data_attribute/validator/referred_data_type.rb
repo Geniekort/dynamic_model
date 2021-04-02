@@ -2,11 +2,24 @@ module DynamicModel::DataAttribute::Validator
   # A validator to validate whether a value actually refers to a DataObject
   #  of a specific DataType
   class ReferredDataType < Base
-    def validate_value(_attribute_value, _data_object)
+    # Validate whether the provided value (if present) refers to a DataObject
+    def validate_value(data_object)
+      attribute_value = data_object.get_data[data_attribute_id_s]
+      return true unless attribute_value
+
+      unless referred_data_type.data_objects.find_by(id: attribute_value)
+        add_error_to_data_object(
+          data_object, 
+          :invalid_attribute_value, 
+          error_detail: :referred_object_not_found,
+          invalid_data_attribute_id: data_attribute.id
+        )
+        return false
+      end
       true
     end
 
-    # Validate whether the provided validation includes an id, referring to a correct
+    # Validate whether the provided validation definition includes an id, referring to a correct
     #  DataType
     def validator_specific_validations
       unless condition.is_a? Hash
