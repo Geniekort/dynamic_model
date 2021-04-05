@@ -33,6 +33,21 @@ module DynamicModel
       send(self.class.dynamic_model_data_object_attrs[:data_column_name]) || {}
     end
 
+    # Get the parsed stored data for an attribute
+    def get_data_by_attribute(attribute)
+      attribute.parse_value(get_raw_data_by_attribute(attribute))
+    end
+
+    # Get the raw stored data for an attribute
+    def get_raw_data_by_attribute(attribute)
+      get_raw_data_by_attribute_id(attribute.id.to_s)
+    end
+
+    # Get the raw stored data for an attribute id
+    def get_raw_data_by_attribute_id(attribute_id)
+      get_data[attribute_id]
+    end
+
     # Validate this data object against its data model.
     def validate_data_with_data_model
       return unless data_type # Early bail-out if data_type is not present. Other validation will fail

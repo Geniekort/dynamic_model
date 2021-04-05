@@ -1,5 +1,17 @@
 module DynamicModel::DataAttribute::Helper
   class Number < Base
+    # Override the parse_value to parse strings into numbers, to make sure
+    #  data converges to the correct type
+    def parse_value(value)
+      case value
+      when Numeric
+        value
+      when String
+        value.to_f
+      else
+        raise ArgumentError, "Cannot parse values of type `#{value.class}`"
+      end
+    end
 
     # Validate whether the value for this field is a number
     def validate_value_type

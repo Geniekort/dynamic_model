@@ -9,6 +9,11 @@ module DynamicModel::DataAttribute
       validate :validate_validation_definition
     end
 
+    # Parse a value for the corresponding AttributeType
+    def parse_value(value)
+      attribute_type_helper.parse_value(value)
+    end
+
     def validate_validation_definition
       return unless attribute_type_helper_class # Early bail-out since other validation will fail
 
@@ -22,7 +27,7 @@ module DynamicModel::DataAttribute
 
     # Create an instance of the attribute type helper
     def attribute_type_helper
-      attribute_type_helper_class.new(self)
+      @attribute_type_helper ||= attribute_type_helper_class.new(self)
     end
 
     def validate_attribute_type

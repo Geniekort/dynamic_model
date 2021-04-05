@@ -32,6 +32,7 @@ module DynamicModel
       belongs_to :data_type, class_name: data_type_class_name
 
       validates :name, presence: true
+
     end
   end
 end

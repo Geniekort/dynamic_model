@@ -1,6 +1,7 @@
 require "active_record"
 require "bundler/setup"
 require "dynamic_model"
+require "factory_bot"
 
 require "byebug"
 
@@ -23,5 +24,10 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.include FactoryBot::Syntax::Methods
+  config.before(:suite) do
+    FactoryBot.find_definitions
   end
 end

@@ -8,6 +8,11 @@ module DynamicModel
           @data_attribute = data_attribute
         end
 
+        # Return the parsed version of `value`
+        def parse_value(value)
+          value
+        end
+
         # Validate a data object for the specific attribute which we are helping.
         def validate_data_object(data_object)
           @data_object = data_object
