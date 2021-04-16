@@ -15,7 +15,7 @@ module DynamicModel::DataAttribute
     end
 
     def validate_validation_definition
-      return unless attribute_type_helper_class # Early bail-out since other validation will fail
+      return unless attribute_type && attribute_type_helper_class # Early bail-out since other validation will fail
 
       attribute_type_helper.validate_validation_definition
     end
@@ -31,6 +31,11 @@ module DynamicModel::DataAttribute
     end
 
     def validate_attribute_type
+      unless attribute_type
+        errors.add(:attribute_type, :blank)
+        return false
+      end
+
       unless attribute_type_helper_class
         errors.add(:attribute_type, :invalid)
         return false

@@ -28,5 +28,13 @@ RSpec.describe DynamicModel::DataAttribute do
       expect(@data_attribute).not_to be_valid
       expect(@data_attribute.errors.details[:name]).to include({ error: :blank })
     end
+
+    it "raises a validation error if the type field is not present" do
+      @data_attribute.attribute_type = nil
+      @data_attribute.save
+
+      expect(@data_attribute).not_to be_valid
+      expect(@data_attribute.errors.details[:attribute_type]).to include({ error: :blank })
+    end
   end
 end
