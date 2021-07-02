@@ -32,7 +32,7 @@ To use this gem, you have to create the following models:
 
 ### DataType
 
-```
+```ruby
 class DataType < ActiveRecord::Base
   dynamic_model
 end
@@ -43,7 +43,7 @@ The database table for this model not need to include any specific fields
 ### DataAttribute
 For the DataAttribute you have to specify which class represents the DataType.
 
-```
+```ruby
 class DataAttribute < ActiveRecord::Base
   dynamic_model_attribute(
     data_type_class_name: "DataType"
@@ -53,7 +53,7 @@ end
 
 The database table for this model needs to include the following fields:
 
-```
+```ruby
  - validation_definition: JSON(B)
  - attribute_type: String
  - data_type_id: Integer
@@ -63,7 +63,7 @@ The database table for this model needs to include the following fields:
 
 For the DataAttribute you have to specify which class represents the DataType, and which column contains the data of a data objects (`data` by default).
 
-```
+```ruby
 class DataObject < ActiveRecord::Base
   dynamic_model_data_object(
     data_column_name: "data", 
@@ -74,7 +74,7 @@ end
 
 The database table for this model needs to include the following fields:
 
-```
+```ruby
  - data: JSON(B) # Can also have a different name, if specified in the model.
  - data_type_id: Integer
 ```
