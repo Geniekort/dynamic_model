@@ -8,6 +8,8 @@ module DynamicModel::DataAttribute::Helper
         value
       when String
         value.to_f
+      when NilClass
+        nil
       else
         raise ArgumentError, "Cannot parse values of type `#{value.class}`"
       end

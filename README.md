@@ -1,8 +1,14 @@
 # DynamicModel
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/dynamic_model`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to the DynamicModel gem. This gem provides all the functionality to create dynamic data models in your (Rails) application. This can help you to provide a data model which your users can adapt during runtime, without the requiring a redeployment.
 
-TODO: Delete this and the text above, and describe your gem
+Tested with Rails & Postgresql and SQLite databases.
+
+Currently supporte DataAttribute types:
+
+- Number
+- Text
+- Reference
 
 ## Installation
 
@@ -22,7 +28,58 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use this gem, you have to create the following models:
+
+### DataType
+
+```
+class DataType < ActiveRecord::Base
+  dynamic_model
+end
+```
+
+The database table for this model not need to include any specific fields
+
+### DataAttribute
+For the DataAttribute you have to specify which class represents the DataType.
+
+```
+class DataAttribute < ActiveRecord::Base
+  dynamic_model_attribute(
+    data_type_class_name: "DataType"
+  )
+end
+```
+
+The database table for this model needs to include the following fields:
+
+```
+ - validation_definition: JSON(B)
+ - attribute_type: String
+ - data_type_id: Integer
+```
+
+### DataObject
+
+For the DataAttribute you have to specify which class represents the DataType, and which column contains the data of a data objects (`data` by default).
+
+```
+class DataObject < ActiveRecord::Base
+  dynamic_model_data_object(
+    data_column_name: "data", 
+    data_type_class_name: "DataType"
+  )
+end
+```
+
+The database table for this model needs to include the following fields:
+
+```
+ - data: JSON(B) # Can also have a different name, if specified in the model.
+ - data_type_id: Integer
+```
+
+Each model can be expanded with your own attributes which you might deem relevant. A basic idea to make the model more intuitive is to add a name field to the DataType and DataAttribute model, so you can present something different than ids to your user.
 
 ## Development
 
@@ -38,22 +95,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the DynamicModel project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/dynamic_model/blob/master/CODE_OF_CONDUCT.md).
-
-
-### Required database schema:
-
-#### DataType
-<!-- -name: String -->
-
-#### DataAttribute
-- validation_definition: JSON(B)
-- attribute_type: String
-- data_type_id: Integer
-
-#### DataObject
-- data: JSON(B)
-- data_type_id: Integer
